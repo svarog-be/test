@@ -1,0 +1,29 @@
+---
+- hosts: test
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  collections:
+    - nginxinc.nginx_core
+  roles:
+      - nginx
+  tasks:
+    - name: file
+      file:
+        path: /var/www/html
+        state: directory
+        mode: '0755'
+    - name: copy index.html to /usr/share/nginx/html/
+      copy:
+        src: /home/p.morozov/test_ans/index.html
+        dest: /usr/share/nginx/html/index.html
+    - name: copy index.html to /var/www/html/
+      copy:
+        src: /home/p.morozov/test_ans/index.html
+        dest: /var/www/html/index.html
+
